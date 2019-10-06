@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+<h1>Create new kamp</h1>
+
+<form action="/create" method="post" >
+    <label for="title">Title: </label>
+    <input name="title" type="text" placeholder="Title">
+    <br>
+    <label for="description">Description: </label>
+    <input name="description" type="text" placeholder="Description">
+    <br>
+    <label for="quote">Quote: </label>
+    <input name="quote" type="text" placeholder="Quote">
+<br>
+    <label for="date">Date: </label>
+    <input name="date" type="datetime-local" placeholder="Date">
+    <br>
+    <button>Save</button>
+</form>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

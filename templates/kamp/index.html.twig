@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+{% include 'kamp/header.html.twig' %}
+<body>
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-5">
+        <a style="margin-left: 75px;" class="navbar-brand space-brand" href="/">
+            <img class="logo" src="images/blozo.png" alt="Blozo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="#">Sportkampen</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="#">Contacten</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Zoeken" aria-label="Zoeken">
+                <button class="btn btn-info my-2 my-sm-0" type="submit">Zoeken</button>
+            </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" style="margin-right: 75px;">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="nav-profile-img rounded-circle" src="images/avatar.jpg">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Profiel</a>
+                        <a class="dropdown-item" href="#">Voeg kamp toe</a>
+                        <a class="dropdown-item" href="#">Uitloggen</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+
+            <!-- Camp List -->
+            {#
+            {% for kamp in random %}
+                {{ kamp.title }} - {{ kamp.description }} - <a href="kamp/{{ kamp.id }}">Details</a></li>
+            {% endfor %}
+            #}
+            <div class="col-sm-12 col-md-8">
+
+                <!-- H1 Camp -->
+                <a class="main-article-link" href="#">
+                    <div class="main-article mb-5 pb-3">
+                        <img src="images/boogschieten.jpg" alt="boogschieten">
+                        <h1 class="text-center mt-2">Test title <br>test quote</h1>
+
+                    </div>
+                </a>
+
+                <!-- Supporting Camps -->
+                {% for kamp in kampen %}
+                <div class="article-container my-1">
+                    <a href="kamp/{{ kamp.id }}">
+                        <img class="article-img" src="images/krabpaal.png">
+                        <div class="article-title d-inline-block pl-3 align-middle">
+                            <span>{{ kamp.title }}<br> {{ kamp.quote }}.</span>
+                            <br>
+                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="images/alien-profile.png"> Philippe </span>
+                            <span class="pl-5 article-details float-right"> 3 uur geleden</span>
+                            <a href="/kamp/{{ kamp.id }}/edit" class="btn btn-primary">Edit</a>
+
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Right bar ad space -->
+
+
+            <div class="col-sm-12 col-md-4 text-center">
+
+                <div class="quote-space pb-2 pt-2 px-5">
+                    <h3 class="text-center pb-3">Getuigenissen</h3>
+                    <p><i class="fa fa-comment"></i> "Toen ik voor het eerst een sacoche wierp,  gooide ik nog geen twee meter ver. Maar nu gaat het al veel beter." <br>— <a href="https://www.youtube.com/watch?v=3jfNfmghZUI" target="_blank">Joost Van Hyfte</a></p>
+
+                    <p class="pt-4"><i class="fa fa-comment"></i> "Eigenlijk was ik nooit traag bij het rennen, maar altijd al een snelwandelaar geweest" <br>— <a href="https://www.youtube.com/watch?v=1z8NpmCqvZE" target="_blank">Kraantje Pappie</a></p>
+
+                    <p class="pt-4"><i class="fa fa-comment"></i> "Tijdens het jongleren, moet ik minder krabben van mijn algerie"<br>— <a href="https://www.youtube.com/watch?v=hJapJjUix8A" target="_blank">Filip Mars</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">Gemaakt met <i class="fa fa-heart" style="color: red;"></i> voor gdm.gent (derived from source files from <a href="https://knpuniversity.com">KnpUniversity</a>)</span>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script>
+        $('.dropdown-toggle').dropdown();
+    </script>
+
+</body>
+</html>
