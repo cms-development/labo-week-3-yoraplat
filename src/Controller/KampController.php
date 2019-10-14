@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use Doctrine\DBAL\Types\BooleanType;
 use PhpParser\Node\Expr\New_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -76,10 +79,12 @@ class KampController extends AbstractController
      * @Route("/update/{id}", name="update_kamp")
      */
     public function updateKamp(Request $request, $id) {
+
         $kamp = $this->getDoctrine()
             ->getRepository(Kamp::class)
             ->find($id);
 
+        /*
         $kamp->setTitle($request->request->get('title'));
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -87,16 +92,40 @@ class KampController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('view_kamp', ['id' => $id]);
+*/
+        $form = $this->createFormBuilder($kamp)
+            ->add('title', TextType::class, [
+                'label' => 'Name of the title',
+                'empty_data' => ''
+            ])
+            ->add('date', DateType::class)
+            ->add('description', TextareaType::class)
+            ->add('image', TextType::class)
+            ->add('quote', TextType::class)
+            ->add('spotlight', CheckboxType::class)
+            ->add('created_at', DateType::class)
+            ->add('save', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        // validate
+        if($form->isSubmitted() && $form->isValid()) {
+            $kamp = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kamp);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('view_kamp', [
+            'form' => $form->createView(),
+            'id' => $id
+        ]);
+
 
     }
 
-    /**
-     * @Route("/new-kamp", name="new_kamp")
-     */
-
-    public function newKamp() {
-        return $this->render('kamp/create.html.twig');
-    }
 
     /**
      * @Route("/create", name="create_kamp")
@@ -104,26 +133,34 @@ class KampController extends AbstractController
     public function createKamp(Request $request) {
         $kamp = new Kamp();
 
+    $form = $this->createFormBuilder($kamp)
+        ->add('title', TextType::class, [
+            'label' => 'Name of the title',
+            'empty_data' => ''
+        ])
+        ->add('date', DateType::class)
+        ->add('description', TextareaType::class)
+        ->add('image', TextType::class)
+        ->add('quote', TextType::class)
+        ->add('spotlight', CheckboxType::class)
+        ->add('created_at', DateType::class)
+        ->add('save', SubmitType::class)
+        ->getForm();
 
+    $form->handleRequest($request);
 
-        $date = new DateTime();
-        $kamp->setTitle($request->request->get('title'));
-        // $kamp->setDate($request->request->get('date'));
-        $kamp->setDate($date);
-        $kamp->setDescription($request->request->get('description'));
-        $kamp->setImage('empty');
-        $kamp->setQuote($request->request->get('quote'));
-        $kamp->setSpotlight(0);
-        $kamp->setCreatedAt($date);
+    // validate
+    if($form->isSubmitted() && $form->isValid()) {
+        $kamp = $form->getData();
 
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($kamp);
+        $em->flush();
+    }
 
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($kamp);
-        $entityManager->flush();
-
-        return$this->redirectToRoute('home');
-
+    return $this->render('kamp/create.html.twig', [
+        'form' => $form->createView()
+    ]);
     }
 
     /**
